@@ -26,6 +26,15 @@
         </p>
     </div>
 
+    <div id="chat" class="chat hidden">
+        <h2>Now practice using it</h2>
+        <div id="chat-log" class="chat-log"></div>
+        <form id="chat-form">
+            <input type="text" id="chat-input" autocomplete="off" placeholder="Type your reply...">
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
