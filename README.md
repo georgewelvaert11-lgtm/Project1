@@ -5,7 +5,7 @@
 and are competent in tasks which involve formal language, however may
 struggle grasping colloquial phrases and idioms.
 
-## Status - repo created, general premise established. Not started building yet
+## Status - repo created, general premise established. Claude code has built basic version of step 1, example dialogue containing phrase, chance for student to guess meaning, then answer reveal.
 
 ## Goal - To build an app which helps Mandarin speakers learn to use and understand colloquial phrases and expressions, through a 3-stage process. Contextual introduction, comprehension check and AI conversation practice. As well as practicing implementation of AI to help solve real language learning problems.
 
