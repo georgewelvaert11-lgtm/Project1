@@ -9,4 +9,12 @@ struggle grasping colloquial phrases and idioms.
 
 ## Goal - To build an app which helps Mandarin speakers learn to use and understand colloquial phrases and expressions, through a 3-stage process. Contextual introduction, comprehension check and AI conversation practice. As well as practicing implementation of AI to help solve real language learning problems.
 
-## Tech stack - still TBD
+## Tech stack -
+
+| Layer     | Choice                              |
+|-----------|--------------------------------------|
+| Frontend  | HTML, CSS, JavaScript               |
+| Backend   | Python (Flask)                      |
+| Database  | SQLite                              |
+| Hosting   | AWS EC2, Docker, nginx              |
+| AI        | Claude API                          |
