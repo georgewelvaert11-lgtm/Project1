@@ -63,11 +63,41 @@ button {
     display: none;
 }
 
-#phrase-progress {
+#overall-progress {
     color: #777;
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+}
+
+#step-nav {
+    display: flex;
+    gap: 16px;
+    margin: 16px 0 24px;
+    border-bottom: 2px solid #eee;
+}
+
+.nav-btn {
+    align-self: auto;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    padding: 8px 4px;
+    font-size: 1rem;
+    color: #777;
+    cursor: pointer;
+}
+
+.nav-btn.active {
+    color: #222;
+    font-weight: bold;
+    border-bottom-color: #333;
+}
+
+.nav-btn:disabled {
+    color: #ccc;
+    cursor: not-allowed;
 }
 
 #step1-controls {
@@ -106,4 +136,25 @@ button {
     border-radius: 8px;
     padding: 16px 20px;
     margin-bottom: 16px;
+}
+
+#reveal-extras {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+#reveal-extras button {
+    background: white;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+}
+
+.extra-result {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #d5e8d5;
 }
