@@ -8,33 +8,40 @@
 <body>
     <h1>Phrasal Verb Practice</h1>
 
-    <div class="dialogue">
-        <p><span class="speaker">A:</span> I need to <strong>figure out</strong> what's going on with this bill.</p>
-        <p><span class="speaker">B:</span> Yeah, it's confusing — let's look into it together.</p>
-    </div>
+    <div id="step1">
+        <h2>Step 1: Learn phrases</h2>
+        <p id="phrase-progress"></p>
 
-    <form id="guess-form">
-        <label for="guess">What do you think "figure out" means here? (English or 繁體中文)</label>
-        <input type="text" id="guess" name="guess" autocomplete="off" placeholder="Type your guess in English or Traditional Chinese" required>
-        <button type="submit">Reveal meaning</button>
-    </form>
+        <div class="dialogue" id="dialogue-box"></div>
 
-    <div id="reveal" class="reveal hidden">
-        <p class="your-guess">Your guess: <span id="your-guess-text"></span></p>
-        <p class="explanation">
-            <strong>Phrasal verb:</strong> "figure out" — to understand or solve something.
-        </p>
-    </div>
-
-    <div id="chat" class="chat hidden">
-        <h2>Now practice using it</h2>
-        <div id="chat-log" class="chat-log"></div>
-        <form id="chat-form">
-            <input type="text" id="chat-input" autocomplete="off" placeholder="Type your reply...">
-            <button type="submit">Send</button>
+        <form id="guess-form">
+            <label for="guess" id="guess-label"></label>
+            <input type="text" id="guess" name="guess" autocomplete="off" placeholder="Type your guess in English or Traditional Chinese" required>
+            <button type="submit">Reveal meaning</button>
         </form>
+
+        <div id="reveal" class="reveal hidden">
+            <p class="your-guess">Your guess: <span id="your-guess-text"></span></p>
+            <p class="explanation" id="reveal-explanation"></p>
+        </div>
+
+        <div id="step1-controls" class="hidden">
+            <button id="next-phrase-btn" type="button">Next phrase</button>
+            <button id="to-step2-btn" type="button" class="hidden">Continue to Step 2 →</button>
+        </div>
     </div>
 
+    <div id="step2" class="hidden">
+        <h2>Step 2: Match the phrase</h2>
+        <p id="discrimination-sentence"></p>
+        <div id="discrimination-options"></div>
+        <div id="discrimination-feedback" class="hidden"></div>
+        <button id="new-round-btn" type="button" class="hidden">Next round</button>
+    </div>
+
+    <script>
+        const PHRASES = {{ phrases | tojson }};
+    </script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
