@@ -8,10 +8,14 @@
 <body>
     <h1>Phrasal Verb Practice</h1>
 
-    <div id="step1">
-        <h2>Step 1: Learn phrases</h2>
-        <p id="phrase-progress"></p>
+    <p id="overall-progress"></p>
 
+    <nav id="step-nav">
+        <button id="nav-step1-btn" type="button" class="nav-btn">Step 1: Learn</button>
+        <button id="nav-step2-btn" type="button" class="nav-btn" disabled>Step 2: Practice</button>
+    </nav>
+
+    <div id="step1">
         <div class="dialogue" id="dialogue-box"></div>
 
         <form id="guess-form">
@@ -23,16 +27,28 @@
         <div id="reveal" class="reveal hidden">
             <p class="your-guess">Your guess: <span id="your-guess-text"></span></p>
             <p class="explanation" id="reveal-explanation"></p>
+
+            <div id="reveal-extras">
+                <button id="show-zh-btn" type="button">顯示繁體中文</button>
+                <button id="show-explain-btn" type="button">Longer explanation</button>
+                <button id="show-example-btn" type="button">Another example</button>
+            </div>
+
+            <p id="reveal-zh" class="extra-result hidden"></p>
+            <p id="explain-result" class="extra-result hidden"></p>
+            <p id="example-result" class="extra-result hidden"></p>
         </div>
 
         <div id="step1-controls" class="hidden">
             <button id="next-phrase-btn" type="button">Next phrase</button>
-            <button id="to-step2-btn" type="button" class="hidden">Continue to Step 2 →</button>
+        </div>
+
+        <div id="all-learned" class="reveal hidden">
+            <p>🎉 You've learned all {{ phrases | length }} phrases! Head to Step 2 to keep practicing.</p>
         </div>
     </div>
 
     <div id="step2" class="hidden">
-        <h2>Step 2: Match the phrase</h2>
         <p id="discrimination-sentence"></p>
         <div id="discrimination-options"></div>
         <div id="discrimination-feedback" class="hidden"></div>
