@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phrasal Verb Practice</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Phrasal Verb Practice</h1>
+
+    <div class="dialogue">
+        <p><span class="speaker">A:</span> I need to <strong>figure out</strong> what's going on with this bill.</p>
+        <p><span class="speaker">B:</span> Yeah, it's confusing — let's look into it together.</p>
+    </div>
+
+    <form id="guess-form">
+        <label for="guess">What do you think "figure out" means here?</label>
+        <input type="text" id="guess" name="guess" autocomplete="off" required>
+        <button type="submit">Reveal meaning</button>
+    </form>
+
+    <div id="reveal" class="reveal hidden">
+        <p class="your-guess">Your guess: <span id="your-guess-text"></span></p>
+        <p class="explanation">
+            <strong>Phrasal verb:</strong> "figure out" — to understand or solve something.
+        </p>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
