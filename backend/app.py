@@ -84,7 +84,12 @@ def discrimination_new():
         f"Write one short, natural sentence or two-sentence scenario (under 30 words) "
         f"describing a situation where someone would want to say they need to "
         f"'{target['meaning']}'. Do not use the phrase '{target['phrase']}' or any "
-        f"part of it anywhere in your response. Reply with only the sentence, no preamble."
+        f"part of it anywhere in your response. Wrap only the specific words that "
+        f"convey this meaning in double asterisks, like **this**, so they can be "
+        f"highlighted - the wrapped words must be plain, literal, non-idiomatic "
+        f"vocabulary (e.g. a single verb like 'solve' or 'invent'), never another "
+        f"phrasal verb or idiom, since the student may not have learned it yet. "
+        f"Reply with only the sentence, no preamble."
     )
 
     try:

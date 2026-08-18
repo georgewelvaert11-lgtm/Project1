@@ -17,6 +17,13 @@ body {
     font-weight: bold;
 }
 
+mark {
+    background: #fff3b0;
+    text-decoration: underline;
+    padding: 0 2px;
+    border-radius: 3px;
+}
+
 .explanation {
     color: #555;
 }

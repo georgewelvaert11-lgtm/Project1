@@ -18,6 +18,11 @@ const MIN_PHRASES_FOR_STEP2 = 3;
 let currentIndex = 0;
 const seenIds = [];
 
+function highlightPhrase(line, phrase) {
+    const regex = new RegExp(`(${phrase})`, "i");
+    return line.replace(regex, "<mark>$1</mark>");
+}
+
 function renderPhrase(index) {
     const phrase = PHRASES[index];
 
@@ -25,7 +30,7 @@ function renderPhrase(index) {
     dialogueBox.innerHTML = "";
     phrase.dialogue.forEach(([speaker, line]) => {
         const p = document.createElement("p");
-        p.innerHTML = `<span class="speaker">${speaker}:</span> ${line}`;
+        p.innerHTML = `<span class="speaker">${speaker}:</span> ${highlightPhrase(line, phrase.phrase)}`;
         dialogueBox.appendChild(p);
     });
 
@@ -86,6 +91,16 @@ const discOptions = document.getElementById("discrimination-options");
 const discFeedback = document.getElementById("discrimination-feedback");
 const newRoundBtn = document.getElementById("new-round-btn");
 
+function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function renderHighlightedSentence(text) {
+    return escapeHtml(text).replace(/\*\*(.+?)\*\*/g, "<mark>$1</mark>");
+}
+
 async function startNewRound() {
     discFeedback.classList.add("hidden");
     newRoundBtn.classList.add("hidden");
@@ -104,7 +119,7 @@ async function startNewRound() {
         return;
     }
 
-    discSentence.textContent = data.sentence;
+    discSentence.innerHTML = renderHighlightedSentence(data.sentence);
     data.options.forEach((option) => {
         const btn = document.createElement("button");
         btn.type = "button";
