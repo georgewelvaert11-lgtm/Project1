@@ -15,8 +15,8 @@ const toStep2Btn = document.getElementById("to-step2-btn");
 
 const MIN_PHRASES_FOR_STEP2 = 3;
 
-let currentIndex = 0;
-const seenIds = [];
+const seenIds = [...SEEN_IDS];
+let currentIndex = Math.min(seenIds.length, PHRASES.length - 1);
 
 function highlightPhrase(line, phrase) {
     const regex = new RegExp(`(${phrase})`, "i");
@@ -26,7 +26,8 @@ function highlightPhrase(line, phrase) {
 function renderPhrase(index) {
     const phrase = PHRASES[index];
 
-    phraseProgress.textContent = `Phrase ${index + 1} of ${PHRASES.length}`;
+    phraseProgress.textContent =
+        `Phrase ${index + 1} of ${PHRASES.length} · ${seenIds.length} learned so far`;
     dialogueBox.innerHTML = "";
     phrase.dialogue.forEach(([speaker, line]) => {
         const p = document.createElement("p");
@@ -48,7 +49,20 @@ function renderPhrase(index) {
         index >= PHRASES.length - 1 ? "No more phrases" : "Next phrase";
 }
 
-guessForm.addEventListener("submit", (event) => {
+async function markPhraseSeen(phraseId) {
+    const response = await fetch("/api/progress/seen", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phrase_id: phraseId }),
+    });
+    const data = await response.json();
+    if (data.seen_ids) {
+        seenIds.length = 0;
+        seenIds.push(...data.seen_ids);
+    }
+}
+
+guessForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const phrase = PHRASES[currentIndex];
 
@@ -58,10 +72,10 @@ guessForm.addEventListener("submit", (event) => {
     guessInput.disabled = true;
     guessForm.querySelector("button").disabled = true;
 
-    if (!seenIds.includes(phrase.id)) {
-        seenIds.push(phrase.id);
-    }
+    await markPhraseSeen(phrase.id);
 
+    phraseProgress.textContent =
+        `Phrase ${currentIndex + 1} of ${PHRASES.length} · ${seenIds.length} learned so far`;
     step1Controls.classList.remove("hidden");
     if (seenIds.length >= MIN_PHRASES_FOR_STEP2) {
         toStep2Btn.classList.remove("hidden");
@@ -107,11 +121,7 @@ async function startNewRound() {
     discOptions.innerHTML = "";
     discSentence.textContent = "Loading a new scenario...";
 
-    const response = await fetch("/api/discrimination/new", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ seen_ids: seenIds }),
-    });
+    const response = await fetch("/api/discrimination/new", { method: "POST" });
     const data = await response.json();
 
     if (data.error) {
