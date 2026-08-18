@@ -56,35 +56,47 @@ button {
     display: none;
 }
 
-.chat {
+#phrase-progress {
+    color: #777;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+#step1-controls {
+    display: flex;
+    gap: 8px;
     margin: 20px 0;
 }
 
-.chat-log {
+#discrimination-sentence {
+    background: #f2f2f2;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 20px 0;
+}
+
+#discrimination-options {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    max-height: 320px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
+    margin-bottom: 16px;
+}
+
+.option-btn {
+    text-align: left;
+}
+
+.feedback-correct {
+    background: #eaf6ea;
     border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
 }
 
-.chat-msg {
-    margin: 0;
-    padding: 8px 12px;
-    border-radius: 12px;
-    max-width: 80%;
-}
-
-.chat-ai {
-    background: #f2f2f2;
-    align-self: flex-start;
-}
-
-.chat-user {
-    background: #d9eaff;
-    align-self: flex-end;
+.feedback-incorrect {
+    background: #fbeaea;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
 }
