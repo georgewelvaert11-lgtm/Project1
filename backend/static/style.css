@@ -70,6 +70,62 @@ button {
     letter-spacing: 0.05em;
 }
 
+.progress-tracker {
+    margin: 12px 0 20px;
+}
+
+.progress-bar {
+    display: flex;
+    height: 10px;
+    width: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #eee;
+}
+
+.segment {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.seg-not-started {
+    background: #ddd;
+}
+
+.seg-seen {
+    background: #a9c6f5;
+}
+
+.seg-practicing {
+    background: #f5c26b;
+}
+
+.seg-mastered {
+    background: #7fc98f;
+}
+
+.progress-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.legend-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
 #step-nav {
     display: flex;
     gap: 16px;
@@ -157,4 +213,34 @@ button {
     margin-top: 12px;
     padding-top: 12px;
     border-top: 1px solid #d5e8d5;
+}
+
+.nudge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #eaf1fb;
+    border: 1px solid #cddcf0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+}
+
+.nudge span {
+    flex: 1;
+    font-size: 0.95rem;
+}
+
+.nudge button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+}
+
+#step2-nudge-dismiss-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    line-height: 1;
+    padding: 0 4px;
+    color: #777;
 }

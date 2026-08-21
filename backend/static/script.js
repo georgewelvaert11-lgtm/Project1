@@ -1,4 +1,5 @@
 const MIN_PHRASES_FOR_STEP2 = 3;
+const NUDGE_INTERVAL = 5;
 
 const seenIds = [...SEEN_IDS];
 
@@ -9,6 +10,19 @@ const navStep1Btn = document.getElementById("nav-step1-btn");
 const navStep2Btn = document.getElementById("nav-step2-btn");
 const step1 = document.getElementById("step1");
 const step2 = document.getElementById("step2");
+const step2Nudge = document.getElementById("step2-nudge");
+const step2NudgeText = document.getElementById("step2-nudge-text");
+const step2NudgeGoBtn = document.getElementById("step2-nudge-go-btn");
+const step2NudgeDismissBtn = document.getElementById("step2-nudge-dismiss-btn");
+
+const segNotStarted = document.getElementById("seg-not-started");
+const segSeen = document.getElementById("seg-seen");
+const segPracticing = document.getElementById("seg-practicing");
+const segMastered = document.getElementById("seg-mastered");
+const countNotStarted = document.getElementById("count-not-started");
+const countSeen = document.getElementById("count-seen");
+const countPracticing = document.getElementById("count-practicing");
+const countMastered = document.getElementById("count-mastered");
 
 let step2Started = false;
 
@@ -22,11 +36,43 @@ function updateProgress() {
     }
 }
 
+function renderProgressTracker(summary) {
+    const pct = (n) => (summary.total === 0 ? 0 : (n / summary.total) * 100);
+
+    segNotStarted.style.width = `${pct(summary.not_started)}%`;
+    segSeen.style.width = `${pct(summary.seen_untested)}%`;
+    segPracticing.style.width = `${pct(summary.practicing)}%`;
+    segMastered.style.width = `${pct(summary.mastered)}%`;
+
+    countNotStarted.textContent = summary.not_started;
+    countSeen.textContent = summary.seen_untested;
+    countPracticing.textContent = summary.practicing;
+    countMastered.textContent = summary.mastered;
+}
+
+async function refreshProgressTracker() {
+    const response = await fetch("/api/progress/summary");
+    const data = await response.json();
+    renderProgressTracker(data);
+}
+
+renderProgressTracker(PROGRESS_SUMMARY);
+
+function maybeShowStep2Nudge() {
+    if (seenIds.length < MIN_PHRASES_FOR_STEP2) return;
+    if (seenIds.length % NUDGE_INTERVAL !== 0) return;
+
+    step2NudgeText.textContent =
+        `You've learned ${seenIds.length} phrases — want to practice them in Step 2?`;
+    step2Nudge.classList.remove("hidden");
+}
+
 function showStep(step) {
     step1.classList.toggle("hidden", step !== 1);
     step2.classList.toggle("hidden", step !== 2);
     navStep1Btn.classList.toggle("active", step === 1);
     navStep2Btn.classList.toggle("active", step === 2);
+    step2Nudge.classList.add("hidden");
 
     if (step === 2 && !step2Started) {
         step2Started = true;
@@ -36,6 +82,8 @@ function showStep(step) {
 
 navStep1Btn.addEventListener("click", () => showStep(1));
 navStep2Btn.addEventListener("click", () => showStep(2));
+step2NudgeGoBtn.addEventListener("click", () => showStep(2));
+step2NudgeDismissBtn.addEventListener("click", () => step2Nudge.classList.add("hidden"));
 
 // ---- Step 1: learn phrases in random order ----
 
@@ -172,6 +220,8 @@ guessForm.addEventListener("submit", async (event) => {
 
     await markPhraseSeen(phrase.id);
     updateProgress();
+    maybeShowStep2Nudge();
+    refreshProgressTracker();
 
     step1Controls.classList.remove("hidden");
 });
@@ -249,6 +299,7 @@ async function selectOption(selectedId) {
 
     discFeedback.classList.remove("hidden");
     newRoundBtn.classList.remove("hidden");
+    refreshProgressTracker();
 }
 
 newRoundBtn.addEventListener("click", startNewRound);

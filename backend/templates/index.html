@@ -10,10 +10,31 @@
 
     <p id="overall-progress"></p>
 
+    <div id="progress-tracker" class="progress-tracker">
+        <div class="progress-bar">
+            <div class="segment seg-not-started" id="seg-not-started"></div>
+            <div class="segment seg-seen" id="seg-seen"></div>
+            <div class="segment seg-practicing" id="seg-practicing"></div>
+            <div class="segment seg-mastered" id="seg-mastered"></div>
+        </div>
+        <div class="progress-legend">
+            <span class="legend-item"><span class="legend-dot seg-not-started"></span>Not started: <span id="count-not-started"></span></span>
+            <span class="legend-item"><span class="legend-dot seg-seen"></span>Seen: <span id="count-seen"></span></span>
+            <span class="legend-item"><span class="legend-dot seg-practicing"></span>Practicing: <span id="count-practicing"></span></span>
+            <span class="legend-item"><span class="legend-dot seg-mastered"></span>Mastered: <span id="count-mastered"></span></span>
+        </div>
+    </div>
+
     <nav id="step-nav">
         <button id="nav-step1-btn" type="button" class="nav-btn">Step 1: Learn</button>
         <button id="nav-step2-btn" type="button" class="nav-btn" disabled>Step 2: Practice</button>
     </nav>
+
+    <div id="step2-nudge" class="nudge hidden">
+        <span id="step2-nudge-text"></span>
+        <button id="step2-nudge-go-btn" type="button">Practice now →</button>
+        <button id="step2-nudge-dismiss-btn" type="button" aria-label="Dismiss">×</button>
+    </div>
 
     <div id="step1">
         <div class="dialogue" id="dialogue-box"></div>
@@ -58,6 +79,7 @@
     <script>
         const PHRASES = {{ phrases | tojson }};
         const SEEN_IDS = {{ seen_ids | tojson }};
+        const PROGRESS_SUMMARY = {{ progress_summary | tojson }};
     </script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
