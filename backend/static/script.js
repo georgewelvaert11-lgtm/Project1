@@ -234,6 +234,47 @@ updateProgress();
 renderPhrase(pickRandomUnseenPhrase());
 showStep(1);
 
+// ---- Add a new phrase to the library ----
+
+const addPhraseForm = document.getElementById("add-phrase-form");
+const newPhraseInput = document.getElementById("new-phrase-input");
+const addPhraseError = document.getElementById("add-phrase-error");
+
+addPhraseForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const phraseText = newPhraseInput.value.trim();
+    if (!phraseText) return;
+
+    addPhraseError.classList.add("hidden");
+    const submitBtn = addPhraseForm.querySelector("button");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Adding...";
+
+    const response = await fetch("/api/phrases/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phrase: phraseText }),
+    });
+    const data = await response.json();
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Add phrase";
+
+    if (data.error) {
+        addPhraseError.textContent = data.error;
+        addPhraseError.classList.remove("hidden");
+        return;
+    }
+
+    PHRASES.push(data.phrase);
+    updateProgress();
+    refreshProgressTracker();
+    newPhraseInput.value = "";
+
+    showStep(1);
+    renderPhrase(data.phrase);
+});
+
 // ---- Step 2: match a scenario sentence to a learned phrase ----
 
 const discSentence = document.getElementById("discrimination-sentence");

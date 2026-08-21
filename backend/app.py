@@ -1,5 +1,7 @@
+import json
 import os
 import random
+import re
 import sqlite3
 from datetime import datetime, timezone
 
@@ -521,8 +523,6 @@ PHRASES = [
     },
 ]
 
-PHRASES_BY_ID = {p["id"]: p for p in PHRASES}
-
 
 def get_db():
     conn = sqlite3.connect(DB_PATH)
@@ -543,7 +543,83 @@ def get_db():
         )
         """
     )
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS custom_phrases (
+            id TEXT PRIMARY KEY,
+            phrase TEXT NOT NULL,
+            meaning TEXT NOT NULL,
+            meaning_zh TEXT NOT NULL,
+            dialogue TEXT NOT NULL,
+            added_at TEXT NOT NULL
+        )
+        """
+    )
     return conn
+
+
+def slugify(text):
+    slug = re.sub(r"[^a-z0-9]+", "_", text.strip().lower()).strip("_")
+    return slug or "phrase"
+
+
+def get_custom_phrases():
+    conn = get_db()
+    try:
+        rows = conn.execute(
+            "SELECT id, phrase, meaning, meaning_zh, dialogue FROM custom_phrases"
+        ).fetchall()
+    finally:
+        conn.close()
+    return [
+        {
+            "id": row[0],
+            "phrase": row[1],
+            "meaning": row[2],
+            "meaning_zh": row[3],
+            "dialogue": json.loads(row[4]),
+        }
+        for row in rows
+    ]
+
+
+def add_custom_phrase(phrase, meaning, meaning_zh, dialogue):
+    existing_ids = {p["id"] for p in get_all_phrases()}
+    base_id = slugify(phrase)
+    phrase_id = base_id
+    suffix = 2
+    while phrase_id in existing_ids:
+        phrase_id = f"{base_id}_{suffix}"
+        suffix += 1
+
+    conn = get_db()
+    try:
+        conn.execute(
+            """
+            INSERT INTO custom_phrases (id, phrase, meaning, meaning_zh, dialogue, added_at)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            (phrase_id, phrase, meaning, meaning_zh, json.dumps(dialogue), datetime.now(timezone.utc).isoformat()),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    return {
+        "id": phrase_id,
+        "phrase": phrase,
+        "meaning": meaning,
+        "meaning_zh": meaning_zh,
+        "dialogue": dialogue,
+    }
+
+
+def get_all_phrases():
+    return PHRASES + get_custom_phrases()
+
+
+def get_all_phrases_by_id():
+    return {p["id"]: p for p in get_all_phrases()}
 
 
 def get_seen_ids():
@@ -552,7 +628,8 @@ def get_seen_ids():
         rows = conn.execute("SELECT phrase_id FROM seen_phrases").fetchall()
     finally:
         conn.close()
-    return [row[0] for row in rows if row[0] in PHRASES_BY_ID]
+    valid_ids = get_all_phrases_by_id()
+    return [row[0] for row in rows if row[0] in valid_ids]
 
 
 def mark_seen(phrase_id):
@@ -610,10 +687,11 @@ def weighted_target_choice(seen_ids, results):
 
 
 def compute_progress_summary():
+    total = len(get_all_phrases())
     seen_ids = set(get_seen_ids())
     results = get_results()
 
-    not_started = len(PHRASES) - len(seen_ids)
+    not_started = total - len(seen_ids)
     seen_untested = 0
     practicing = 0
     mastered = 0
@@ -628,7 +706,7 @@ def compute_progress_summary():
             practicing += 1
 
     return {
-        "total": len(PHRASES),
+        "total": total,
         "not_started": not_started,
         "seen_untested": seen_untested,
         "practicing": practicing,
@@ -659,7 +737,7 @@ def ask_claude(prompt, max_tokens=150):
 def index():
     return render_template(
         "index.html",
-        phrases=PHRASES,
+        phrases=get_all_phrases(),
         seen_ids=get_seen_ids(),
         progress_summary=compute_progress_summary(),
     )
@@ -675,17 +753,66 @@ def progress_seen():
     data = request.get_json(silent=True) or {}
     phrase_id = data.get("phrase_id")
 
-    if phrase_id not in PHRASES_BY_ID:
+    if phrase_id not in get_all_phrases_by_id():
         return jsonify({"error": "Unknown phrase id."}), 400
 
     mark_seen(phrase_id)
     return jsonify({"seen_ids": get_seen_ids()})
 
 
+@app.route("/api/phrases/add", methods=["POST"])
+def add_phrase():
+    data = request.get_json(silent=True) or {}
+    phrase_text = (data.get("phrase") or "").strip()
+
+    if not phrase_text:
+        return jsonify({"error": "Please enter a phrase."}), 400
+    if len(phrase_text) > 60:
+        return jsonify({"error": "That phrase is too long."}), 400
+
+    existing = get_all_phrases()
+    if any(p["phrase"].lower() == phrase_text.lower() for p in existing):
+        return jsonify({"error": "That phrase is already in the library."}), 400
+
+    prompt = (
+        f"A Mandarin-speaking English learner wants to add the phrase or expression "
+        f"'{phrase_text}' to their study list. Provide:\n"
+        f"1. A concise, clear meaning/definition in English (one sentence).\n"
+        f"2. A natural Traditional Chinese (繁體中文) translation of that meaning.\n"
+        f"3. A short two-line example dialogue (one line for speaker A, one for speaker "
+        f"B) that naturally uses the exact phrase '{phrase_text}' unchanged, in its base "
+        f"form - do not conjugate, inflect, or change its tense in any way.\n"
+        f"Reply with ONLY a JSON object with keys 'meaning', 'meaning_zh', and 'dialogue' "
+        f"(dialogue as an array of exactly two [speaker, line] pairs, speaker being 'A' "
+        f"or 'B'). No markdown code fences, no other text."
+    )
+
+    text, error = ask_claude(prompt, max_tokens=400)
+    if error:
+        return error
+
+    cleaned = text.strip().strip("`").strip()
+    if cleaned.startswith("json"):
+        cleaned = cleaned[4:].strip()
+
+    try:
+        content = json.loads(cleaned)
+        meaning = content["meaning"]
+        meaning_zh = content["meaning_zh"]
+        dialogue = content["dialogue"]
+        assert isinstance(dialogue, list) and len(dialogue) == 2
+    except Exception:
+        return jsonify({"error": "Couldn't generate content for that phrase - try rephrasing it."}), 502
+
+    new_phrase = add_custom_phrase(phrase_text, meaning, meaning_zh, dialogue)
+
+    return jsonify({"phrase": new_phrase})
+
+
 @app.route("/api/phrase/explain", methods=["POST"])
 def phrase_explain():
     data = request.get_json(silent=True) or {}
-    phrase = PHRASES_BY_ID.get(data.get("phrase_id"))
+    phrase = get_all_phrases_by_id().get(data.get("phrase_id"))
     if not phrase:
         return jsonify({"error": "Unknown phrase id."}), 400
 
@@ -709,7 +836,7 @@ def phrase_explain():
 @app.route("/api/phrase/example", methods=["POST"])
 def phrase_example():
     data = request.get_json(silent=True) or {}
-    phrase = PHRASES_BY_ID.get(data.get("phrase_id"))
+    phrase = get_all_phrases_by_id().get(data.get("phrase_id"))
     if not phrase:
         return jsonify({"error": "Unknown phrase id."}), 400
 
@@ -735,12 +862,13 @@ def phrase_example():
 @app.route("/api/discrimination/new", methods=["POST"])
 def discrimination_new():
     seen_ids = get_seen_ids()
+    all_phrases_by_id = get_all_phrases_by_id()
 
     if len(seen_ids) < 2:
         return jsonify({"error": "Not enough phrases learned yet."}), 400
 
     target_id = weighted_target_choice(seen_ids, get_results())
-    target = PHRASES_BY_ID[target_id]
+    target = all_phrases_by_id[target_id]
 
     prompt = (
         f"Write one short, natural sentence or two-sentence scenario (under 30 words) "
@@ -768,7 +896,7 @@ def discrimination_new():
     option_ids = distractors + [target_id]
     random.shuffle(option_ids)
 
-    options = [{"id": i, "phrase": PHRASES_BY_ID[i]["phrase"]} for i in option_ids]
+    options = [{"id": i, "phrase": all_phrases_by_id[i]["phrase"]} for i in option_ids]
 
     return jsonify({"sentence": sentence, "options": options})
 
@@ -782,7 +910,7 @@ def discrimination_check():
     if not target_id:
         return jsonify({"error": "No active round - start a new one."}), 400
 
-    target = PHRASES_BY_ID[target_id]
+    target = get_all_phrases_by_id()[target_id]
     correct = selected_id == target_id
     record_result(target_id, correct)
 

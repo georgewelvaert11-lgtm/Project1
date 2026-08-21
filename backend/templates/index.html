@@ -8,6 +8,14 @@
 <body>
     <h1>Phrasal Verb Practice</h1>
 
+    <p class="intro">
+        <strong>Step 1</strong> introduces new phrases one at a time — read the dialogue,
+        guess the meaning, then reveal it. <strong>Step 2</strong> tests what you've
+        learned by matching real-life scenarios to phrases you've already seen. You'll be
+        prompted to try Step 2 every 5 phrases, but feel free to switch over whenever
+        you're ready.
+    </p>
+
     <p id="overall-progress"></p>
 
     <div id="progress-tracker" class="progress-tracker">
@@ -34,6 +42,17 @@
         <span id="step2-nudge-text"></span>
         <button id="step2-nudge-go-btn" type="button">Practice now →</button>
         <button id="step2-nudge-dismiss-btn" type="button" aria-label="Dismiss">×</button>
+    </div>
+
+    <div id="add-phrase">
+        <form id="add-phrase-form">
+            <label for="new-phrase-input">Heard a new phrase? Add it to your list:</label>
+            <div class="add-phrase-row">
+                <input type="text" id="new-phrase-input" autocomplete="off" placeholder="e.g. kick the bucket" maxlength="60" required>
+                <button type="submit">Add phrase</button>
+            </div>
+        </form>
+        <div id="add-phrase-error" class="add-phrase-error hidden"></div>
     </div>
 
     <div id="step1">
