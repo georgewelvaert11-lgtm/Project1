@@ -14,7 +14,9 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY", os.urandom(24).hex())
 client = anthropic.Anthropic(api_key=os.environ["Mandarin_speakers_learn_phrases"])
 
 MODEL = "claude-haiku-4-5"
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "progress.db")
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+DB_PATH = os.path.join(DATA_DIR, "progress.db")
+os.makedirs(DATA_DIR, exist_ok=True)
 
 PHRASES = [
     {
