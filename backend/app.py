@@ -269,6 +269,256 @@ PHRASES = [
             ("B", "Yeah, the salary was too low."),
         ],
     },
+    {
+        "id": "pile_up",
+        "phrase": "pile up",
+        "meaning": "to gradually accumulate or build up in quantity",
+        "meaning_zh": "堆積",
+        "dialogue": [
+            ("A", "My emails always pile up when I go on vacation."),
+            ("B", "Same here — I dread opening my inbox after a trip."),
+        ],
+    },
+    {
+        "id": "carry_out",
+        "phrase": "carry out",
+        "meaning": "to perform or complete a task, plan, or instruction",
+        "meaning_zh": "執行",
+        "dialogue": [
+            ("A", "The manager asked us to carry out a safety inspection today."),
+            ("B", "No problem, I'll start with the fire exits."),
+        ],
+    },
+    {
+        "id": "catch_up",
+        "phrase": "catch up",
+        "meaning": "to reach the same level or progress as someone else, or to share recent news with someone",
+        "meaning_zh": "趕上",
+        "dialogue": [
+            ("A", "Let's catch up over coffee soon — it's been ages."),
+            ("B", "Definitely, I have so much to tell you."),
+        ],
+    },
+    {
+        "id": "check_out",
+        "phrase": "check out",
+        "meaning": "to look at or investigate something, or to leave a hotel after paying the bill",
+        "meaning_zh": "查看",
+        "dialogue": [
+            ("A", "You should check out this new restaurant downtown."),
+            ("B", "I've heard great things — let's go this weekend."),
+        ],
+    },
+    {
+        "id": "cut_down",
+        "phrase": "cut down",
+        "meaning": "to reduce the amount of something, like a habit or expense",
+        "meaning_zh": "減少",
+        "dialogue": [
+            ("A", "I'm trying to cut down on sugar this year."),
+            ("B", "That's a good goal — maybe start with soda."),
+        ],
+    },
+    {
+        "id": "fall_apart",
+        "phrase": "fall apart",
+        "meaning": "to break into pieces, or to become extremely upset or unable to cope",
+        "meaning_zh": "崩潰",
+        "dialogue": [
+            ("A", "These cheap headphones fall apart after a month."),
+            ("B", "Yeah, I've had the same problem twice."),
+        ],
+    },
+    {
+        "id": "find_out",
+        "phrase": "find out",
+        "meaning": "to discover information about something",
+        "meaning_zh": "發現",
+        "dialogue": [
+            ("A", "I need to find out what time the store closes."),
+            ("B", "I'll check their website for you."),
+        ],
+    },
+    {
+        "id": "get_away",
+        "phrase": "get away",
+        "meaning": "to escape from somewhere, or to go on a vacation",
+        "meaning_zh": "逃脫",
+        "dialogue": [
+            ("A", "We really need to get away for the weekend."),
+            ("B", "Agreed, let's book a cabin somewhere quiet."),
+        ],
+    },
+    {
+        "id": "get_through",
+        "phrase": "get through",
+        "meaning": "to successfully deal with or survive something difficult, or to reach someone by phone",
+        "meaning_zh": "度過",
+        "dialogue": [
+            ("A", "I don't know how I'll get through this exam period."),
+            ("B", "One day at a time — you've got this."),
+        ],
+    },
+    {
+        "id": "go_over",
+        "phrase": "go over",
+        "meaning": "to review or examine something carefully",
+        "meaning_zh": "複習",
+        "dialogue": [
+            ("A", "Can we go over the budget one more time before the meeting?"),
+            ("B", "Sure, give me five minutes to pull it up."),
+        ],
+    },
+    {
+        "id": "grow_up",
+        "phrase": "grow up",
+        "meaning": "to become an adult, or to stop behaving in a childish way",
+        "meaning_zh": "長大",
+        "dialogue": [
+            ("A", "Kids grow up so fast these days."),
+            ("B", "I know — mine changes every week."),
+        ],
+    },
+    {
+        "id": "look_after",
+        "phrase": "look after",
+        "meaning": "to take care of someone or something",
+        "meaning_zh": "照顧",
+        "dialogue": [
+            ("A", "Can you look after my cat while I'm traveling?"),
+            ("B", "Of course, just leave me some instructions."),
+        ],
+    },
+    {
+        "id": "look_forward_to",
+        "phrase": "look forward to",
+        "meaning": "to feel excited or pleased about something that is going to happen",
+        "meaning_zh": "期待",
+        "dialogue": [
+            ("A", "I really look forward to the holidays every year."),
+            ("B", "Same — the food alone makes it worth the wait."),
+        ],
+    },
+    {
+        "id": "move_on",
+        "phrase": "move on",
+        "meaning": "to stop dwelling on a difficult situation and continue with life",
+        "meaning_zh": "繼續前進",
+        "dialogue": [
+            ("A", "It took a while, but I've finally learned to move on from that breakup."),
+            ("B", "I'm proud of you — that wasn't easy."),
+        ],
+    },
+    {
+        "id": "pay_off",
+        "phrase": "pay off",
+        "meaning": "to be worth the effort in the end, or to fully repay a debt",
+        "meaning_zh": "值得",
+        "dialogue": [
+            ("A", "All those late nights studying finally pay off when you see your grades."),
+            ("B", "Exactly, hard work always pays off eventually."),
+        ],
+    },
+    {
+        "id": "run_out",
+        "phrase": "run out",
+        "meaning": "to have none of something left",
+        "meaning_zh": "用完",
+        "dialogue": [
+            ("A", "We're about to run out of milk again."),
+            ("B", "I'll grab some on my way home."),
+        ],
+    },
+    {
+        "id": "set_up",
+        "phrase": "set up",
+        "meaning": "to arrange, prepare, or put something in place",
+        "meaning_zh": "建立",
+        "dialogue": [
+            ("A", "Can you help me set up the projector for the presentation?"),
+            ("B", "Sure, give me a minute to find the cables."),
+        ],
+    },
+    {
+        "id": "show_off",
+        "phrase": "show off",
+        "meaning": "to try to impress people by displaying your abilities or possessions",
+        "meaning_zh": "炫耀",
+        "dialogue": [
+            ("A", "He always likes to show off his new gadgets."),
+            ("B", "Yeah, but they usually are pretty cool."),
+        ],
+    },
+    {
+        "id": "sort_out",
+        "phrase": "sort out",
+        "meaning": "to resolve a problem, or to organize something",
+        "meaning_zh": "解決",
+        "dialogue": [
+            ("A", "We still need to sort out the seating for the wedding."),
+            ("B", "Let's do it together this weekend."),
+        ],
+    },
+    {
+        "id": "stand_out",
+        "phrase": "stand out",
+        "meaning": "to be easily noticed because of being different or better than others",
+        "meaning_zh": "脫穎而出",
+        "dialogue": [
+            ("A", "Her designs always stand out in a crowd."),
+            ("B", "She has a real eye for color."),
+        ],
+    },
+    {
+        "id": "take_off",
+        "phrase": "take off",
+        "meaning": "for a plane to leave the ground, or for something to become suddenly successful",
+        "meaning_zh": "起飛",
+        "dialogue": [
+            ("A", "Our flight is about to take off, so please turn off your phone."),
+            ("B", "Got it, switching to airplane mode now."),
+        ],
+    },
+    {
+        "id": "turn_out",
+        "phrase": "turn out",
+        "meaning": "to happen or end in a particular way, especially unexpectedly",
+        "meaning_zh": "結果是",
+        "dialogue": [
+            ("A", "I'm curious how this recipe will turn out."),
+            ("B", "Let me know — I might try it too."),
+        ],
+    },
+    {
+        "id": "wake_up",
+        "phrase": "wake up",
+        "meaning": "to stop sleeping and become conscious",
+        "meaning_zh": "醒來",
+        "dialogue": [
+            ("A", "I always wake up before my alarm goes off."),
+            ("B", "I wish I had that problem — I sleep through mine."),
+        ],
+    },
+    {
+        "id": "work_out",
+        "phrase": "work out",
+        "meaning": "to exercise, or for a plan or situation to end successfully",
+        "meaning_zh": "成功",
+        "dialogue": [
+            ("A", "I try to work out at the gym three times a week."),
+            ("B", "That's impressive — I can barely manage once."),
+        ],
+    },
+    {
+        "id": "call_off",
+        "phrase": "call off",
+        "meaning": "to cancel something that was planned",
+        "meaning_zh": "取消",
+        "dialogue": [
+            ("A", "They had to call off the picnic because of the storm."),
+            ("B", "That's a shame, we were looking forward to it."),
+        ],
+    },
 ]
 
 PHRASES_BY_ID = {p["id"]: p for p in PHRASES}
@@ -281,6 +531,15 @@ def get_db():
         CREATE TABLE IF NOT EXISTS seen_phrases (
             phrase_id TEXT PRIMARY KEY,
             seen_at TEXT NOT NULL
+        )
+        """
+    )
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS phrase_results (
+            phrase_id TEXT PRIMARY KEY,
+            correct_count INTEGER NOT NULL DEFAULT 0,
+            incorrect_count INTEGER NOT NULL DEFAULT 0
         )
         """
     )
@@ -308,6 +567,75 @@ def mark_seen(phrase_id):
         conn.close()
 
 
+def get_results():
+    """Returns {phrase_id: (correct_count, incorrect_count)}."""
+    conn = get_db()
+    try:
+        rows = conn.execute(
+            "SELECT phrase_id, correct_count, incorrect_count FROM phrase_results"
+        ).fetchall()
+    finally:
+        conn.close()
+    return {row[0]: (row[1], row[2]) for row in rows}
+
+
+def record_result(phrase_id, correct):
+    conn = get_db()
+    try:
+        conn.execute(
+            """
+            INSERT INTO phrase_results (phrase_id, correct_count, incorrect_count)
+            VALUES (?, ?, ?)
+            ON CONFLICT(phrase_id) DO UPDATE SET
+                correct_count = correct_count + excluded.correct_count,
+                incorrect_count = incorrect_count + excluded.incorrect_count
+            """,
+            (phrase_id, 1 if correct else 0, 0 if correct else 1),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def weighted_target_choice(seen_ids, results):
+    """Picks a target phrase, weighting toward ones answered incorrectly more
+    often than correctly. Never-attempted and mastered phrases keep a floor
+    weight of 1 so every seen phrase can still come up occasionally."""
+    weights = []
+    for phrase_id in seen_ids:
+        correct, incorrect = results.get(phrase_id, (0, 0))
+        weight = max(1, 1 + incorrect - correct)
+        weights.append(weight)
+    return random.choices(seen_ids, weights=weights, k=1)[0]
+
+
+def compute_progress_summary():
+    seen_ids = set(get_seen_ids())
+    results = get_results()
+
+    not_started = len(PHRASES) - len(seen_ids)
+    seen_untested = 0
+    practicing = 0
+    mastered = 0
+
+    for phrase_id in seen_ids:
+        correct, incorrect = results.get(phrase_id, (0, 0))
+        if correct + incorrect == 0:
+            seen_untested += 1
+        elif correct > incorrect:
+            mastered += 1
+        else:
+            practicing += 1
+
+    return {
+        "total": len(PHRASES),
+        "not_started": not_started,
+        "seen_untested": seen_untested,
+        "practicing": practicing,
+        "mastered": mastered,
+    }
+
+
 def ask_claude(prompt, max_tokens=150):
     """Returns (text, None) on success, or (None, (json_response, status)) on failure."""
     try:
@@ -329,7 +657,17 @@ def ask_claude(prompt, max_tokens=150):
 
 @app.route("/")
 def index():
-    return render_template("index.html", phrases=PHRASES, seen_ids=get_seen_ids())
+    return render_template(
+        "index.html",
+        phrases=PHRASES,
+        seen_ids=get_seen_ids(),
+        progress_summary=compute_progress_summary(),
+    )
+
+
+@app.route("/api/progress/summary")
+def progress_summary_route():
+    return jsonify(compute_progress_summary())
 
 
 @app.route("/api/progress/seen", methods=["POST"])
@@ -401,7 +739,7 @@ def discrimination_new():
     if len(seen_ids) < 2:
         return jsonify({"error": "Not enough phrases learned yet."}), 400
 
-    target_id = random.choice(seen_ids)
+    target_id = weighted_target_choice(seen_ids, get_results())
     target = PHRASES_BY_ID[target_id]
 
     prompt = (
@@ -445,9 +783,11 @@ def discrimination_check():
         return jsonify({"error": "No active round - start a new one."}), 400
 
     target = PHRASES_BY_ID[target_id]
+    correct = selected_id == target_id
+    record_result(target_id, correct)
 
     return jsonify({
-        "correct": selected_id == target_id,
+        "correct": correct,
         "correct_phrase": target["phrase"],
         "meaning": target["meaning"],
     })
