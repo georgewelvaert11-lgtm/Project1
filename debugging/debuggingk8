@@ -1,0 +1,10 @@
+##Debugging Kubernetes
+- kubectl get pods
+- kubectl get deployments
+- (kubectl get services)
+- kubectl describe pod <pod name>
+- kubectl logs <pod name>
+
+- Look to bottom line to find ERROR TYPE!
+- What category of problem is it? Have i seen it before? How can i fix it?
+- Make ONE change then re-check with kubectl apply -f deployment.yaml and kubectl get pods

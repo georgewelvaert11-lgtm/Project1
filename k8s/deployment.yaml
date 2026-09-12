@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phrasal-verbs-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: phrasal-verbs-app
+  template:
+    metadata:
+      labels:
+        app: phrasal-verbs-app
+    spec:
+      containers:
+        - name: phrasal-verbs-app
+          image: phrasal-verbs-app
+          imagePullPolicy: Never
+          envFrom:
+            - secretRef:
+                name: phrasal-verbs-secret
+          ports:
+            - containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
